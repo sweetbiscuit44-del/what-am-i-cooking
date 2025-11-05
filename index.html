@@ -7,253 +7,229 @@
 <meta name="description" content="Add ingredients and get practical recipe suggestions, quick steps, substitutions and tips. Privacy-first, single-file, GitHub Pages ready." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧑‍🍳</text></svg>">
 <style>
-  :root{
-    --bg:#fffaf6;
-    --card:#ffffff;
-    --muted:#6b6f76;
-    --accent:#ff6b6b;
-    --accent2:#ffb86b;
-    --glass:rgba(0,0,0,0.04);
-    --radius:12px;
-    --chip-bg:#fff4f4;
-    --chip-border:rgba(255,107,107,0.25);
-    --success:#4ade80;
-    --warning:#fbbf24;
-    --error:#f87171;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    background:linear-gradient(180deg,var(--bg),#fff6f0);
-    color:#182026;
-    padding:32px 16px;
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-    min-height:100vh;
-  }
-  .app{width:100%;max-width:1080px}
-  header{display:flex;gap:16px;align-items:center;margin-bottom:24px}
-  .logo{
-    width:60px;height:60px;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    border-radius:14px;
-    display:flex;align-items:center;justify-content:center;
-    color:#fff;font-size:24px;font-weight:900;
-    box-shadow:0 8px 30px rgba(255,107,107,0.18);
-  }
-  h1{margin:0;font-size:24px;font-weight:800}
-  .sub{color:var(--muted);font-size:14px;line-height:1.4}
-  .panel{
-    background:var(--card);
-    padding:20px;
-    border-radius:var(--radius);
-    border:1px solid var(--glass);
-    box-shadow:0 4px 16px rgba(0,0,0,0.02);
-  }
-  .input-row{display:flex;gap:10px;margin-top:12px;align-items:flex-start}
-  #ingInput{
-    flex:1;
-    padding:12px 14px;
-    border-radius:10px;
-    border:1px solid rgba(0,0,0,0.1);
-    font-size:16px;
-    min-height:60px;
-    resize:vertical;
-    line-height:1.5;
-  }
-  .btn{
-    background:var(--accent);
-    color:white;
-    padding:12px 16px;
-    border-radius:10px;
-    border:none;
-    cursor:pointer;
-    font-weight:700;
-    transition:background-color 0.2s, transform 0.1s;
-  }
-  .btn:hover{background-color:#e05b5b}
-  .btn:active{transform:scale(0.98)}
-  .btn.ghost{
-    background:transparent;
-    color:var(--muted);
-    border:1px solid rgba(0,0,0,0.1);
-  }
-  .btn.ghost:hover{background-color:rgba(0,0,0,0.03)}
-  .btn.success{background:var(--success);color:#111}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;min-height:30px}
-  .chip{
-    background:var(--chip-bg);
-    border:1px solid var(--chip-border);
-    padding:6px 10px;
-    border-radius:999px;
-    display:flex;
-    gap:6px;
-    align-items:center;
-    font-size:14px;
-  }
-  .chip button{
-    all:unset;
-    cursor:pointer;
-    color:var(--accent);
-    font-weight:700;
-    margin-left:4px;
-    line-height:1;
-  }
-  .chip button:hover{color:#d04a4a}
-  .grid{display:grid;grid-template-columns:2fr 360px;gap:24px;margin-top:20px}
-  .result{
-    padding:18px;
-    border-radius:var(--radius);
-    border:1px solid rgba(0,0,0,0.06);
-    background:linear-gradient(180deg,#fff,#fffefc);
-  }
-  .result h3{margin:0;font-size:20px}
-  .score{font-weight:900;color:var(--accent);font-size:22px}
-  .alt-list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
-  .alt{
-    padding:12px;
-    border-radius:8px;
-    background:#fffaf6;
-    border:1px solid rgba(0,0,0,0.05);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
-  .alt button{padding:8px 12px; font-size:14px}
-  .meta{color:var(--muted);font-size:13px;margin-top:2px}
-  .side-panel{position:sticky;top:32px;display:flex;flex-direction:column;gap:16px}
-  .small{font-size:13px;color:var(--muted);line-height:1.5}
-  textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);min-height:84px}
-  .feedback-badge {
-    display:inline-block;
-    margin-left:10px;
-    padding:2px 8px;
-    border-radius:20px;
-    font-weight:700;
-    font-size:14px;
-  }
-  .feedback-good { background:var(--success); color:#000; }
-  .feedback-bad { background:var(--error); color:white; }
-  footer{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:32px;
-    padding-top:16px;
-    border-top:1px dashed rgba(0,0,0,0.1);
-    color:var(--muted);
-  }
-  footer .small{font-size:12px}
-  @media (max-width:900px){
-    .grid{grid-template-columns:1fr;gap:16px}
-    .side-panel{position:static;margin-top:16px}
-    body{padding:16px}
-    header{margin-bottom:16px}
-  }
+/* ---------- STYLING ---------- */
+:root {
+  --bg:#fffaf6;
+  --card:#ffffff;
+  --muted:#6b6f76;
+  --accent:#ff6b6b;
+  --accent2:#ffb86b;
+  --glass:rgba(0,0,0,0.04);
+  --radius:12px;
+  --chip-bg:#fff4f4;
+  --chip-border:rgba(255,107,107,0.25);
+  --success:#4ade80;
+}
+* { box-sizing:border-box }
+body {
+  margin:0;
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:linear-gradient(180deg,var(--bg),#fff6f0);
+  color:#182026;
+  padding:32px 16px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  min-height:100vh;
+}
+.app { width:100%; max-width:1080px }
+header { display:flex; gap:16px; align-items:center; margin-bottom:24px }
+.logo {
+  width:60px; height:60px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:24px; font-weight:900;
+  box-shadow:0 8px 30px rgba(255,107,107,0.18);
+}
+h1 { margin:0; font-size:24px; font-weight:800 }
+.sub { color:var(--muted); font-size:14px; line-height:1.4 }
+.panel {
+  background:var(--card);
+  padding:20px;
+  border-radius:var(--radius);
+  border:1px solid var(--glass);
+  box-shadow:0 4px 16px rgba(0,0,0,0.02);
+}
+.input-row { display:flex; gap:10px; margin-top:12px; align-items:flex-start }
+#ingInput {
+  flex:1; padding:12px 14px; border-radius:10px; border:1px solid rgba(0,0,0,0.1);
+  font-size:16px; min-height:60px; resize:vertical; line-height:1.5;
+}
+.btn {
+  background:var(--accent); color:white; padding:12px 16px; border-radius:10px; border:none;
+  cursor:pointer; font-weight:700; transition:background-color 0.2s, transform 0.1s;
+}
+.btn:hover { background-color:#e05b5b }
+.btn:active { transform:scale(0.98) }
+.btn.ghost { background:transparent; color:var(--muted); border:1px solid rgba(0,0,0,0.1) }
+.btn.ghost:hover { background-color:rgba(0,0,0,0.03) }
+.chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; min-height:30px }
+.chip {
+  background:var(--chip-bg); border:1px solid var(--chip-border);
+  padding:6px 10px; border-radius:999px; display:flex; gap:6px; align-items:center; font-size:14px;
+}
+.chip button { all:unset; cursor:pointer; color:var(--accent); font-weight:700; margin-left:4px; line-height:1 }
+.grid { display:grid; grid-template-columns:2fr 360px; gap:24px; margin-top:20px }
+.result {
+  padding:18px; border-radius:var(--radius); border:1px solid rgba(0,0,0,0.06);
+  background:linear-gradient(180deg,#fff,#fffefc);
+}
+.side-panel { position:sticky; top:32px; display:flex; flex-direction:column; gap:16px }
+.small { font-size:13px; color:var(--muted); line-height:1.5 }
+footer {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:32px; padding-top:16px; border-top:1px dashed rgba(0,0,0,0.1); color:var(--muted);
+}
+@media(max-width:900px) {
+  .grid { grid-template-columns:1fr; gap:16px }
+  .side-panel { position:static; margin-top:16px }
+}
 </style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <div class="logo">B44</div>
-      <div>
-        <h1>What Am I Cooking?</h1>
-        <div class="sub">Add ingredients, get real recipes — built by Biscuit 44. No tracking. No keys. Just dinner ❤️</div>
-      </div>
-    </header>
+<div class="app">
+  <header>
+    <div class="logo">B44</div>
+    <div>
+      <h1>What Am I Cooking?</h1>
+      <div class="sub">Add ingredients, get real recipes — built by Biscuit 44. No tracking. No keys. Just dinner ❤️</div>
+    </div>
+  </header>
 
-    <div class="panel">
-      <label class="small">Add ingredients (press <strong>Enter</strong> or <strong>+ Add</strong>). Type multiple separated by commas, semicolons, or newlines.</label>
-      <div class="input-row">
-        <textarea id="ingInput" placeholder="e.g. chicken, garlic, rice, spinach&#10;OR&#10;beef; eggs; cheese" aria-label="Add ingredients"></textarea>
-        <button class="btn" id="addBtn">＋ Add</button>
-      </div>
-      <div class="chips" id="chips"></div>
+  <div class="panel">
+    <label class="small">Add ingredients (press Enter or + Add)</label>
+    <div class="input-row">
+      <textarea id="ingInput" placeholder="e.g. chicken, rice, onion" aria-label="Add ingredients"></textarea>
+      <button class="btn" id="addBtn">＋ Add</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div style="display:flex;gap:12px;margin-top:20px;align-items:center">
+      <button class="btn" id="guessBtn">🔍 Guess Dish</button>
+      <button class="btn ghost" id="randomBtn">Surprise me</button>
+      <button class="btn ghost" id="clearBtn">Clear Pantry</button>
+    </div>
+  </div>
 
-      <div style="display:flex;gap:12px;margin-top:20px;align-items:center">
-        <button class="btn" id="guessBtn">🔍 Guess Dish</button>
-        <button class="btn ghost" id="randomBtn">Surprise me</button>
-        <button class="btn ghost" id="clearBtn">Clear Pantry</button>
-        <div style="margin-left:auto" class="small">Privacy: Runs entirely in your browser.</div>
+  <div class="grid">
+    <div>
+      <div class="result" id="mainResult">
+        <h3 id="mainTitle">Add ingredients to see suggestions</h3>
+        <div id="mainMeta" class="small">We'll analyze ingredient matches and methods.</div>
+        <div id="mainSteps" style="margin-top:10px"></div>
+      </div>
+
+      <div style="height:16px"></div>
+      <div class="result">
+        <strong>Other Ideas</strong>
+        <div id="alternatives" class="small" style="margin-top:8px">No suggestions yet.</div>
       </div>
     </div>
 
-    <div class="grid">
-      <div>
-        <div class="result" id="mainResult" aria-live="polite">
-          <h3 id="mainTitle">Add ingredients to see suggestions</h3>
-          <div id="mainMeta" class="meta">We'll analyze ingredient matches, common pairings, and cooking methods.</div>
-          <div id="mainSteps" style="margin-top:10px"></div>
-        </div>
-
-        <div style="height:16px"></div>
-
-        <div class="result">
-          <strong>Other Top Ideas</strong>
-          <div id="alternatives" class="alt-list"><div class="small">No suggestions yet — add ingredients and press Guess.</div></div>
-        </div>
-
-        <div style="height:16px"></div>
-
-        <div class="result">
-          <strong>Saved Ideas</strong>
-          <div id="savedList" class="alt-list"><div class="small">Save recipe suggestions for later (stored locally).</div></div>
-        </div>
+    <aside class="side-panel">
+      <div class="panel">
+        <strong>Tips & Substitutions</strong>
+        <div id="tips" class="small" style="margin-top:8px">Add ingredients to get practical swaps.</div>
       </div>
-
-      <aside class="side-panel">
-        <div class="panel">
-          <strong>Tips & Substitutions</strong>
-          <div id="tips" class="small" style="margin-top:8px">Add ingredients to get practical swaps and quick tips.</div>
-          <div style="height:12px"></div>
-          <strong>Data Management</strong>
-          <div class="small" style="margin-top:6px">The recipe matches against a small, curated database. It works fully offline.</div>
-          <div style="height:10px"></div>
-          <button class="btn" id="exportBtn">Export Ideas</button>
-          <button class="btn ghost" id="importBtn">Import Ideas</button>
-        </div>
-
-        <div class="panel">
-          <strong>Support Biscuit 44</strong>
-          <div class="small" style="margin-top:8px">
-            If this saved you dinner time (or a grocery trip), please 
-            <a href="https://paypal.me/sweetbiscuit44" style="color:var(--accent);text-decoration:none;font-weight:700" target="_blank">send $1</a> — 
-            your kindness keeps simple alive ❤️
-          </div>
-        </div>
-      </aside>
-
-    <footer>
-      <div class="small">Made with care by Biscuit 44 — pure HTML, privacy-first.</div>
-      <div class="small">Share your creation and tag: <strong>#Biscuit44Kitchen</strong></div>
-    </footer>
+    </aside>
   </div>
 
+  <footer>
+    <div class="small">Made with care by Biscuit 44 — pure HTML.</div>
+  </footer>
+</div>
+
 <script>
-// --- CORE LOGIC ---
-const ingInput=document.getElementById('ingInput');
-const addBtn=document.getElementById('addBtn');
-const clearBtn=document.getElementById('clearBtn');
-const chipsEl=document.getElementById('chips');
-const guessBtn=document.getElementById('guessBtn');
-const randomBtn=document.getElementById('randomBtn');
-const mainTitle=document.getElementById('mainTitle');
-const mainMeta=document.getElementById('mainMeta');
-const mainSteps=document.getElementById('mainSteps');
-const alternatives=document.getElementById('alternatives');
-const tips=document.getElementById('tips');
-const savedList=document.getElementById('savedList');
-const exportBtn=document.getElementById('exportBtn');
-const importBtn=document.getElementById('importBtn');
+/* ---------- CORE LOGIC ---------- */
+const ingInput = document.getElementById('ingInput');
+const addBtn = document.getElementById('addBtn');
+const clearBtn = document.getElementById('clearBtn');
+const guessBtn = document.getElementById('guessBtn');
+const randomBtn = document.getElementById('randomBtn');
+const chipsEl = document.getElementById('chips');
+const mainTitle = document.getElementById('mainTitle');
+const mainMeta = document.getElementById('mainMeta');
+const mainSteps = document.getElementById('mainSteps');
+const alternatives = document.getElementById('alternatives');
+const tips = document.getElementById('tips');
 
-// Optional: safely set tipLink if exists
-const tipLink=document.getElementById('tipLink');
-if(tipLink) tipLink.href='https://ko-fi.com/yourname';
+let pantry = [];
 
-// rest of JS identical
-// --- (keep full script as before, unchanged except the tipLink fix) ---
+function renderChips() {
+  chipsEl.innerHTML = '';
+  pantry.forEach((item, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.textContent = item;
+    const x = document.createElement('button');
+    x.textContent = '×';
+    x.onclick = () => { pantry.splice(i,1); renderChips(); };
+    chip.appendChild(x);
+    chipsEl.appendChild(chip);
+  });
+}
+
+function addIngredients() {
+  const raw = ingInput.value.trim();
+  if(!raw) return;
+  const parts = raw.split(/[,;\n]+/).map(v=>v.trim()).filter(Boolean);
+  pantry.push(...parts.filter(p=>!pantry.includes(p)));
+  ingInput.value='';
+  renderChips();
+}
+
+function clearPantry() {
+  pantry = [];
+  renderChips();
+  mainTitle.textContent = 'Add ingredients to see suggestions';
+  mainMeta.textContent = 'We\'ll analyze ingredient matches.';
+  mainSteps.textContent = '';
+  alternatives.textContent = 'No suggestions yet.';
+  tips.textContent = 'Add ingredients to get practical swaps.';
+}
+
+// sample recipe database
+const recipes = [
+  { name:'Chicken Fried Rice', items:['chicken','rice','egg','onion'], steps:['Cook rice','Stir-fry with chicken, egg, onion'], tip:'Use leftover rice for best texture.' },
+  { name:'Garlic Butter Pasta', items:['garlic','pasta','butter'], steps:['Boil pasta','Mix with butter & sautéed garlic'], tip:'Add chili flakes for spice.' },
+  { name:'Veggie Omelette', items:['egg','onion','tomato','spinach'], steps:['Whisk eggs','Add veggies & cook'], tip:'Add a splash of milk for fluffiness.' },
+  { name:'Beef Stir Fry', items:['beef','soy sauce','garlic','onion'], steps:['Slice beef','Stir fry with soy & garlic'], tip:'Use high heat for sear.' },
+  { name:'Tomato Soup', items:['tomato','onion','garlic'], steps:['Simmer tomatoes','Blend & season'], tip:'Add cream for richness.' },
+];
+
+function guessDish() {
+  if(pantry.length===0) return;
+  let best = null;
+  let score = 0;
+  for(const r of recipes){
+    const match = r.items.filter(i=>pantry.includes(i)).length;
+    if(match>score){ score=match; best=r; }
+  }
+  if(!best){ mainTitle.textContent='No idea 😅'; return; }
+  mainTitle.textContent = best.name;
+  mainMeta.textContent = `Matches: ${score}/${best.items.length}`;
+  mainSteps.innerHTML = '<ul>'+best.steps.map(s=>`<li>${s}</li>`).join('')+'</ul>';
+  tips.textContent = best.tip;
+  const alts = recipes.filter(r=>r!==best).map(r=>r.name).join(', ');
+  alternatives.textContent = alts || 'No alternatives.';
+}
+
+function randomDish(){
+  const r = recipes[Math.floor(Math.random()*recipes.length)];
+  mainTitle.textContent = r.name;
+  mainMeta.textContent = `Random pick from pantry AI 🍳`;
+  mainSteps.innerHTML = '<ul>'+r.steps.map(s=>`<li>${s}</li>`).join('')+'</ul>';
+  tips.textContent = r.tip;
+}
+
+// event listeners
+addBtn.onclick = addIngredients;
+clearBtn.onclick = clearPantry;
+guessBtn.onclick = guessDish;
+randomBtn.onclick = randomDish;
+ingInput.addEventListener('keypress',e=>{
+  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); addIngredients(); }
+});
 </script>
 </body>
 </html>
