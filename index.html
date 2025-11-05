@@ -1,235 +1,220 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>What Am I Cooking? — Ingredient Builder by Biscuit 44</title>
-<meta name="description" content="Add ingredients and get practical recipe suggestions, quick steps, substitutions and tips. Privacy-first, single-file, GitHub Pages ready." />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧑‍🍳</text></svg>">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What Am I Cooking? — by Sweet Biscuit 44</title>
 <style>
-/* ---------- STYLING ---------- */
 :root {
   --bg:#fffaf6;
-  --card:#ffffff;
-  --muted:#6b6f76;
   --accent:#ff6b6b;
   --accent2:#ffb86b;
-  --glass:rgba(0,0,0,0.04);
-  --radius:12px;
-  --chip-bg:#fff4f4;
-  --chip-border:rgba(255,107,107,0.25);
-  --success:#4ade80;
+  --card:#ffffff;
+  --muted:#6b6f76;
+  --radius:14px;
+  --shadow:0 8px 20px rgba(0,0,0,0.04);
 }
-* { box-sizing:border-box }
-body {
-  margin:0;
+*{box-sizing:border-box;}
+body{
   font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  margin:0;
   background:linear-gradient(180deg,var(--bg),#fff6f0);
-  color:#182026;
-  padding:32px 16px;
+  color:#202020;
   display:flex;
-  align-items:flex-start;
   justify-content:center;
-  min-height:100vh;
+  padding:32px 12px 80px;
 }
-.app { width:100%; max-width:1080px }
-header { display:flex; gap:16px; align-items:center; margin-bottom:24px }
-.logo {
-  width:60px; height:60px;
+.app{max-width:700px;width:100%;}
+header{text-align:center;margin-bottom:24px;}
+.logo{
+  width:64px;height:64px;margin:0 auto 12px;
+  border-radius:20px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border-radius:14px;
-  display:flex; align-items:center; justify-content:center;
-  color:#fff; font-size:24px; font-weight:900;
-  box-shadow:0 8px 30px rgba(255,107,107,0.18);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:28px;box-shadow:var(--shadow);
 }
-h1 { margin:0; font-size:24px; font-weight:800 }
-.sub { color:var(--muted); font-size:14px; line-height:1.4 }
-.panel {
+h1{margin:0;font-size:24px;font-weight:800;}
+.sub{color:var(--muted);font-size:14px;}
+.panel{
   background:var(--card);
-  padding:20px;
   border-radius:var(--radius);
-  border:1px solid var(--glass);
-  box-shadow:0 4px 16px rgba(0,0,0,0.02);
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin-bottom:16px;
 }
-.input-row { display:flex; gap:10px; margin-top:12px; align-items:flex-start }
-#ingInput {
-  flex:1; padding:12px 14px; border-radius:10px; border:1px solid rgba(0,0,0,0.1);
-  font-size:16px; min-height:60px; resize:vertical; line-height:1.5;
+textarea{
+  width:100%;min-height:70px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  font-size:15px;
+  resize:vertical;
 }
-.btn {
-  background:var(--accent); color:white; padding:12px 16px; border-radius:10px; border:none;
-  cursor:pointer; font-weight:700; transition:background-color 0.2s, transform 0.1s;
+.btn{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:12px 18px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .2s,transform .1s;
 }
-.btn:hover { background-color:#e05b5b }
-.btn:active { transform:scale(0.98) }
-.btn.ghost { background:transparent; color:var(--muted); border:1px solid rgba(0,0,0,0.1) }
-.btn.ghost:hover { background-color:rgba(0,0,0,0.03) }
-.chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; min-height:30px }
-.chip {
-  background:var(--chip-bg); border:1px solid var(--chip-border);
-  padding:6px 10px; border-radius:999px; display:flex; gap:6px; align-items:center; font-size:14px;
+.btn:hover{background:#e45b5b;}
+.btn:active{transform:scale(0.97);}
+.btn.ghost{
+  background:#f5f5f5;
+  color:#333;
 }
-.chip button { all:unset; cursor:pointer; color:var(--accent); font-weight:700; margin-left:4px; line-height:1 }
-.grid { display:grid; grid-template-columns:2fr 360px; gap:24px; margin-top:20px }
-.result {
-  padding:18px; border-radius:var(--radius); border:1px solid rgba(0,0,0,0.06);
-  background:linear-gradient(180deg,#fff,#fffefc);
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.chip{
+  background:#fff4f4;
+  border:1px solid rgba(255,107,107,0.25);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
-.side-panel { position:sticky; top:32px; display:flex; flex-direction:column; gap:16px }
-.small { font-size:13px; color:var(--muted); line-height:1.5 }
-footer {
-  display:flex; justify-content:space-between; align-items:center;
-  margin-top:32px; padding-top:16px; border-top:1px dashed rgba(0,0,0,0.1); color:var(--muted);
+.chip button{
+  all:unset;
+  color:var(--accent);
+  font-weight:700;
+  cursor:pointer;
 }
-@media(max-width:900px) {
-  .grid { grid-template-columns:1fr; gap:16px }
-  .side-panel { position:static; margin-top:16px }
+.result{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px;
+  margin-top:16px;
+}
+.result h3{margin-top:0;}
+footer{
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+  margin-top:32px;
+  line-height:1.6;
 }
 </style>
 </head>
 <body>
 <div class="app">
   <header>
-    <div class="logo">B44</div>
-    <div>
-      <h1>What Am I Cooking?</h1>
-      <div class="sub">Add ingredients, get real recipes — built by Biscuit 44. No tracking. No keys. Just dinner ❤️</div>
-    </div>
+    <div class="logo">SB44</div>
+    <h1>What Am I Cooking?</h1>
+    <div class="sub">Add ingredients → Get inspired recipes — simple, clean, offline.</div>
   </header>
 
   <div class="panel">
-    <label class="small">Add ingredients (press Enter or + Add)</label>
-    <div class="input-row">
-      <textarea id="ingInput" placeholder="e.g. chicken, rice, onion" aria-label="Add ingredients"></textarea>
+    <label for="ingInput" class="sub">Enter ingredients (comma, semicolon or Enter separated):</label>
+    <textarea id="ingInput" placeholder="e.g. chicken, garlic, rice, egg"></textarea>
+    <div style="display:flex;gap:10px;margin-top:10px;">
       <button class="btn" id="addBtn">＋ Add</button>
+      <button class="btn ghost" id="clearBtn">Clear</button>
+      <button class="btn ghost" id="randomBtn" style="margin-left:auto;">🎲 Surprise</button>
     </div>
     <div class="chips" id="chips"></div>
-    <div style="display:flex;gap:12px;margin-top:20px;align-items:center">
-      <button class="btn" id="guessBtn">🔍 Guess Dish</button>
-      <button class="btn ghost" id="randomBtn">Surprise me</button>
-      <button class="btn ghost" id="clearBtn">Clear Pantry</button>
-    </div>
   </div>
 
-  <div class="grid">
-    <div>
-      <div class="result" id="mainResult">
-        <h3 id="mainTitle">Add ingredients to see suggestions</h3>
-        <div id="mainMeta" class="small">We'll analyze ingredient matches and methods.</div>
-        <div id="mainSteps" style="margin-top:10px"></div>
-      </div>
+  <button class="btn" id="guessBtn" style="width:100%;margin-bottom:16px;">🔍 Guess Dish</button>
 
-      <div style="height:16px"></div>
-      <div class="result">
-        <strong>Other Ideas</strong>
-        <div id="alternatives" class="small" style="margin-top:8px">No suggestions yet.</div>
-      </div>
-    </div>
-
-    <aside class="side-panel">
-      <div class="panel">
-        <strong>Tips & Substitutions</strong>
-        <div id="tips" class="small" style="margin-top:8px">Add ingredients to get practical swaps.</div>
-      </div>
-    </aside>
+  <div class="result" id="output">
+    <h3 id="dishTitle">Add a few ingredients to begin 🍳</h3>
+    <p id="dishMeta" class="sub"></p>
+    <ul id="dishSteps" style="padding-left:20px;"></ul>
+    <p id="dishTip" style="color:var(--accent);font-weight:600;"></p>
   </div>
 
   <footer>
-    <div class="small">Made with care by Biscuit 44 — pure HTML.</div>
+    Made with love & pure coding by <strong>Sweet Biscuit 44</strong><br>
+    Your support is appreciated 💕
   </footer>
 </div>
 
 <script>
-/* ---------- CORE LOGIC ---------- */
-const ingInput = document.getElementById('ingInput');
-const addBtn = document.getElementById('addBtn');
-const clearBtn = document.getElementById('clearBtn');
-const guessBtn = document.getElementById('guessBtn');
-const randomBtn = document.getElementById('randomBtn');
-const chipsEl = document.getElementById('chips');
-const mainTitle = document.getElementById('mainTitle');
-const mainMeta = document.getElementById('mainMeta');
-const mainSteps = document.getElementById('mainSteps');
-const alternatives = document.getElementById('alternatives');
-const tips = document.getElementById('tips');
+/* ------------ LOGIC ------------ */
+const ingInput=document.getElementById('ingInput');
+const addBtn=document.getElementById('addBtn');
+const clearBtn=document.getElementById('clearBtn');
+const randomBtn=document.getElementById('randomBtn');
+const guessBtn=document.getElementById('guessBtn');
+const chips=document.getElementById('chips');
+const title=document.getElementById('dishTitle');
+const meta=document.getElementById('dishMeta');
+const steps=document.getElementById('dishSteps');
+const tip=document.getElementById('dishTip');
 
-let pantry = [];
+let pantry=[];
 
-function renderChips() {
-  chipsEl.innerHTML = '';
-  pantry.forEach((item, i) => {
-    const chip = document.createElement('div');
-    chip.className = 'chip';
-    chip.textContent = item;
-    const x = document.createElement('button');
-    x.textContent = '×';
-    x.onclick = () => { pantry.splice(i,1); renderChips(); };
-    chip.appendChild(x);
-    chipsEl.appendChild(chip);
+/* sample recipe ideas */
+const recipes=[
+  {name:'Garlic Butter Pasta',items:['garlic','pasta','butter'],steps:['Boil pasta','Melt butter with garlic','Toss pasta and season'],tip:'Add chili flakes for spice.'},
+  {name:'Chicken Fried Rice',items:['chicken','rice','egg','onion'],steps:['Cook rice','Stir-fry chicken','Add rice + egg + onion'],tip:'Use leftover rice for best texture.'},
+  {name:'Tomato Soup',items:['tomato','onion','garlic'],steps:['Simmer chopped tomatoes','Blend & season'],tip:'Add a splash of cream for richness.'},
+  {name:'Veggie Omelette',items:['egg','spinach','tomato','cheese'],steps:['Whisk eggs','Add veggies','Cook gently'],tip:'Fold with cheese for gooey center.'},
+  {name:'Beef Stir Fry',items:['beef','soy sauce','garlic','onion'],steps:['Sear beef','Add garlic + soy','Serve hot'],tip:'High heat = tender beef.'},
+];
+
+/* helpers */
+function renderChips(){
+  chips.innerHTML='';
+  pantry.forEach((item,i)=>{
+    const c=document.createElement('div');
+    c.className='chip';
+    c.innerHTML=`${item}<button>×</button>`;
+    c.querySelector('button').onclick=()=>{pantry.splice(i,1);renderChips();};
+    chips.appendChild(c);
   });
 }
 
-function addIngredients() {
-  const raw = ingInput.value.trim();
-  if(!raw) return;
-  const parts = raw.split(/[,;\n]+/).map(v=>v.trim()).filter(Boolean);
-  pantry.push(...parts.filter(p=>!pantry.includes(p)));
+function addIngredients(){
+  const txt=ingInput.value.trim();
+  if(!txt)return;
+  const arr=txt.split(/[,;\n]+/).map(v=>v.trim().toLowerCase()).filter(Boolean);
+  arr.forEach(a=>{if(!pantry.includes(a))pantry.push(a);});
   ingInput.value='';
   renderChips();
 }
 
-function clearPantry() {
-  pantry = [];
-  renderChips();
-  mainTitle.textContent = 'Add ingredients to see suggestions';
-  mainMeta.textContent = 'We\'ll analyze ingredient matches.';
-  mainSteps.textContent = '';
-  alternatives.textContent = 'No suggestions yet.';
-  tips.textContent = 'Add ingredients to get practical swaps.';
+function clearPantry(){
+  pantry=[]; renderChips();
+  title.textContent='Add a few ingredients to begin 🍳';
+  meta.textContent=''; steps.innerHTML=''; tip.textContent='';
 }
 
-// sample recipe database
-const recipes = [
-  { name:'Chicken Fried Rice', items:['chicken','rice','egg','onion'], steps:['Cook rice','Stir-fry with chicken, egg, onion'], tip:'Use leftover rice for best texture.' },
-  { name:'Garlic Butter Pasta', items:['garlic','pasta','butter'], steps:['Boil pasta','Mix with butter & sautéed garlic'], tip:'Add chili flakes for spice.' },
-  { name:'Veggie Omelette', items:['egg','onion','tomato','spinach'], steps:['Whisk eggs','Add veggies & cook'], tip:'Add a splash of milk for fluffiness.' },
-  { name:'Beef Stir Fry', items:['beef','soy sauce','garlic','onion'], steps:['Slice beef','Stir fry with soy & garlic'], tip:'Use high heat for sear.' },
-  { name:'Tomato Soup', items:['tomato','onion','garlic'], steps:['Simmer tomatoes','Blend & season'], tip:'Add cream for richness.' },
-];
-
-function guessDish() {
-  if(pantry.length===0) return;
-  let best = null;
-  let score = 0;
-  for(const r of recipes){
-    const match = r.items.filter(i=>pantry.includes(i)).length;
-    if(match>score){ score=match; best=r; }
-  }
-  if(!best){ mainTitle.textContent='No idea 😅'; return; }
-  mainTitle.textContent = best.name;
-  mainMeta.textContent = `Matches: ${score}/${best.items.length}`;
-  mainSteps.innerHTML = '<ul>'+best.steps.map(s=>`<li>${s}</li>`).join('')+'</ul>';
-  tips.textContent = best.tip;
-  const alts = recipes.filter(r=>r!==best).map(r=>r.name).join(', ');
-  alternatives.textContent = alts || 'No alternatives.';
+function guessDish(){
+  if(pantry.length===0){title.textContent='Add some ingredients first 😊';return;}
+  let best=null,score=0;
+  recipes.forEach(r=>{
+    const match=r.items.filter(i=>pantry.includes(i)).length;
+    if(match>score){score=match;best=r;}
+  });
+  if(!best){title.textContent='No matches found 😅';return;}
+  title.textContent=best.name;
+  meta.textContent=`Matches ${score}/${best.items.length}`;
+  steps.innerHTML=best.steps.map(s=>`<li>${s}</li>`).join('');
+  tip.textContent=best.tip;
 }
 
 function randomDish(){
-  const r = recipes[Math.floor(Math.random()*recipes.length)];
-  mainTitle.textContent = r.name;
-  mainMeta.textContent = `Random pick from pantry AI 🍳`;
-  mainSteps.innerHTML = '<ul>'+r.steps.map(s=>`<li>${s}</li>`).join('')+'</ul>';
-  tips.textContent = r.tip;
+  const r=recipes[Math.floor(Math.random()*recipes.length)];
+  title.textContent=r.name;
+  meta.textContent='Random chef inspiration ✨';
+  steps.innerHTML=r.steps.map(s=>`<li>${s}</li>`).join('');
+  tip.textContent=r.tip;
 }
 
-// event listeners
-addBtn.onclick = addIngredients;
-clearBtn.onclick = clearPantry;
-guessBtn.onclick = guessDish;
-randomBtn.onclick = randomDish;
+/* events */
+addBtn.onclick=addIngredients;
 ingInput.addEventListener('keypress',e=>{
-  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); addIngredients(); }
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();addIngredients();}
 });
+clearBtn.onclick=clearPantry;
+guessBtn.onclick=guessDish;
+randomBtn.onclick=randomDish;
 </script>
 </body>
 </html>
