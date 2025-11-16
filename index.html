@@ -4,21 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>What Am I Cooking? — by Sweet Biscuit 44</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 /* ⭐ MODERNIZED VARIABLES */
 :root {
---bg-light: #fefcfb; /* Lighter background */
---bg-medium: #fff6f0; /* Subtle contrast */
---accent: #e74c3c; /* A classic, strong red (red-700 equivalent) */
---accent-light: #fef2f2; /* Very light red for chips */
---accent2: #f39c12; /* A warm orange (amber-600 equivalent) */
+--bg-light: #fefcfb; 
+--bg-medium: #fff6f0; 
+--accent: #e74c3c; 
+--accent-light: #fef2f2; 
+--accent2: #f39c12; 
 --card: #ffffff;
 --text-main: #2c3e50;
---text-muted: #95a5a6; /* Softer gray for muted text */
---border: #ecf0f1; /* Light, clean border color */
+--text-muted: #95a5a6; 
+--border: #ecf0f1; 
 --radius-lg: 12px;
---shadow: 0 4px 12px rgba(0,0,0,0.08); /* Softer, broader shadow */
+--shadow: 0 4px 12px rgba(0,0,0,0.08); 
 --shadow-light: 0 1px 3px rgba(0,0,0,0.05);
+/* Added colors for the floating icon */
+--biscuit-primary: #d2691e;
+--biscuit-hover: #a0522d;
 }
 
 *{box-sizing:border-box;}
@@ -34,6 +38,21 @@ min-height: 100vh;
 }
 .app{max-width:680px;width:100%;}
 
+/* 2. ADDED FLOATING BISCUIT CSS */
+.biscuit-icon {
+  font-size: 3.5rem;
+  color: var(--biscuit-primary);
+  margin-bottom: 12px; /* Adjusted margin */
+  animation: biscuit-bounce 1.8s infinite alternate cubic-bezier(.27,.67,.33,.95);
+  display: inline-block;
+}
+@keyframes biscuit-bounce {
+  to { transform: translateY(-12px) scale(1.1);}
+  from { transform: translateY(4px) scale(0.97);}
+}
+/* END FLOATING BISCUIT CSS */
+
+
 /* HEADER STYLES */
 header{text-align:center;margin-bottom:30px;}
 .logo{
@@ -43,6 +62,8 @@ background:linear-gradient(135deg,var(--accent),var(--accent2));
 color:#fff;display:flex;align-items:center;justify-content:center;
 font-weight:800;font-size:24px;
 box-shadow:var(--shadow-light);
+/* Removed the default logo box to rely on the biscuit icon */
+display: none; 
 }
 h1{margin:0;font-size:28px;font-weight:800;color:var(--accent);}
 .sub{color:var(--text-muted);font-size:15px;}
@@ -180,7 +201,7 @@ box-shadow:0 4px 10px rgba(243, 156, 18, 0.2);
 }
 footer a.paypal:hover{background:#e67e22;transform:translateY(-1px);}
 
-/* ⭐ Main Website CTA */
+/* Main Website CTA */
 .main-website-cta{
 text-align:center;
 margin-top:30px;
@@ -190,7 +211,7 @@ display:inline-flex;
 align-items:center;
 gap:8px;
 padding:12px 24px;
-background:var(--text-main); /* Dark color for contrast */
+background:var(--text-main); 
 color:white;
 font-weight:600;
 border-radius:8px;
@@ -213,8 +234,10 @@ transform:translateY(-2px);
 <body>
 <div class="app">
 <header>
-<div class="logo">SB44</div>
-<h1>What Am I Cooking?</h1>
+<div class="biscuit-icon" aria-label="Cookie Icon">
+    <i class="fas fa-cookie-bite" aria-hidden="true"></i>
+</div>
+<div class="logo">SB44</div> <h1>What Am I Cooking?</h1>
 <div class="sub">Add ingredients → Get inspired recipes — simple, clean, offline.</div>
 </header>
 
@@ -249,6 +272,7 @@ Your support is appreciated 💕<br>
     🍪 Visit Sweet Biscuit 44's Main Website
 </a>
 </div>
+
 </div>
 
 <script>
